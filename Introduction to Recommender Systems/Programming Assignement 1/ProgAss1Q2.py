@@ -44,7 +44,7 @@ for i in range(0,3):
     for movie, allusers in newTemp.items():
         numerator = len(list(set(testMovieList[movieId[i]]) & set(newTemp[movie])))/len(testMovieList[movieId[i]])
         denominator = len(list(set(newTemp[movie]) & set(list(set(userList) ^ set(testMovieList[movieId[i]])))))/len(list(set(userList) ^ set(testMovieList[movieId[i]])))
-        solution[movie] = float("%.2f" % round(numerator/denominator, 2)) if denominator != 0 else 0 #This last condition avoid the target movie being on top of the recommeended list
+        solution[movie] = numerator/denominator if denominator != 0 else 0 #This last condition avoid the target movie being on top of the recommeended list
     
     #Sorted version of the solution
     sortedDict = sorted(solution.items(), key=lambda k: k[1], reverse = True)
@@ -54,7 +54,7 @@ for i in range(0,3):
     for key, value in sortedDict:
         #Print only top 5 movieID's and their scores AND avoid being receommended the target movie itself
         if j < 5 and key not in movieId:
-            a += "," + str(key) + "," + str(solution[key])
+            a += "," + str(key) + "," + str(float("%.2f" % round(solution[key], 2)))
         j += 1
     
     print a

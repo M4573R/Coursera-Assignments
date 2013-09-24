@@ -42,7 +42,7 @@ for i in range(0,3):
     
     #Find how many intersecting user ID's are there for each of the movies and then compute the ratio
     for movie, allusers in newTemp.items():
-        solution[movie] = float("%.2f" % round(len(list(set(testMovieList[movieId[i]]) & set(newTemp[movie])))/len(testMovieList[movieId[i]]), 2))
+        solution[movie] = len(list(set(testMovieList[movieId[i]]) & set(newTemp[movie])))/len(testMovieList[movieId[i]])
     
     #Sorted version of the solution
     sortedDict = sorted(solution.items(), key=lambda k: k[1], reverse = True)
@@ -51,8 +51,8 @@ for i in range(0,3):
     j = 0
     for key, value in sortedDict:
         #Print only top 5 movieID's and their scores AND avoid being receommended the target movie itself
-        if j < 5 and key not in movieId:
-            a += "," + str(key) + "," + str(solution[key])
+        if j <= 5 and key not in movieId:
+            a += "," + str(key) + "," + str(float("%.2f" % round(solution[key], 2)))
         j += 1
     
     print a
